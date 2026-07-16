@@ -3,7 +3,7 @@
 A deterministic limit-order-book matching engine in Rust, running live in the
 browser via WebAssembly — with a synthetic market trading against you.
 
-**Live demo:** _(coming with first deploy)_
+**Live demo:** [dushyantbaroliya.github.io/ledger](https://dushyantbaroliya.github.io/ledger/)
 
 ## What this is
 
