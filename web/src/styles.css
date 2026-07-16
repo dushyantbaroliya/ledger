@@ -1,0 +1,357 @@
+/* Ledger design tokens — a committed dark terminal. This surface is an
+   instrument panel, not a document: one mono family everywhere, emerald for
+   bids, amber for asks, and nothing else colored. */
+
+:root {
+  --bg: #08090c;
+  --panel: #0e1116;
+  --panel-edge: #1a1f28;
+  --text: #dde3ec;
+  --text-muted: #6b7484;
+  --bid: #34d399;
+  --ask: #fbbf24;
+  --bid-dim: rgba(52, 211, 153, 0.14);
+  --ask-dim: rgba(251, 191, 36, 0.12);
+  --font-mono: "JetBrains Mono", "Cascadia Code", Consolas, ui-monospace, monospace;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-mono);
+  font-size: 13px;
+  line-height: 1.45;
+  font-variant-numeric: tabular-nums;
+  overflow: hidden;
+}
+
+button,
+input,
+select {
+  font: inherit;
+  color: inherit;
+  background: none;
+  border: none;
+}
+
+button {
+  cursor: pointer;
+}
+
+:focus-visible {
+  outline: 1px solid var(--text-muted);
+  outline-offset: 2px;
+}
+
+/* ---------------------------------------------------------------- layout */
+
+.app {
+  display: grid;
+  grid-template-rows: 44px 1fr 32px;
+  height: 100%;
+}
+
+.workspace {
+  display: grid;
+  grid-template-columns: minmax(320px, 2fr) minmax(0, 3fr) minmax(260px, 1.4fr);
+  gap: 1px;
+  background: var(--panel-edge);
+  min-height: 0;
+}
+
+.pane {
+  background: var(--bg);
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  min-height: 0;
+}
+
+.pane-title {
+  padding: 8px 12px;
+  color: var(--text-muted);
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  border-bottom: 1px solid var(--panel-edge);
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+}
+
+.pane-body {
+  flex: 1;
+  min-height: 0;
+  position: relative;
+}
+
+canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+/* ---------------------------------------------------------------- top bar */
+
+.topbar {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  padding: 0 14px;
+  border-bottom: 1px solid var(--panel-edge);
+  background: var(--panel);
+}
+
+.wordmark {
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  font-size: 14px;
+}
+
+.wordmark::after {
+  content: "_";
+  color: var(--bid);
+  animation: blink 1.2s steps(1) infinite;
+}
+
+@keyframes blink {
+  50% {
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .wordmark::after {
+    animation: none;
+  }
+}
+
+.instrument {
+  color: var(--text-muted);
+  font-size: 12px;
+}
+
+.bbo {
+  display: flex;
+  gap: 16px;
+  margin-left: auto;
+  font-size: 13px;
+}
+
+.bbo .bid-px {
+  color: var(--bid);
+}
+
+.bbo .ask-px {
+  color: var(--ask);
+}
+
+.bbo .label {
+  color: var(--text-muted);
+  margin-right: 6px;
+  font-size: 11px;
+}
+
+.controls {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.btn {
+  padding: 4px 12px;
+  border: 1px solid var(--panel-edge);
+  background: var(--panel);
+  color: var(--text);
+  font-size: 12px;
+  transition: border-color 120ms ease;
+}
+
+.btn:hover {
+  border-color: var(--text-muted);
+}
+
+.btn.primary {
+  border-color: var(--bid);
+  color: var(--bid);
+}
+
+.btn[aria-pressed="true"] {
+  border-color: var(--ask);
+  color: var(--ask);
+}
+
+.speed {
+  display: flex;
+  border: 1px solid var(--panel-edge);
+}
+
+.speed button {
+  padding: 4px 10px;
+  font-size: 11px;
+  color: var(--text-muted);
+}
+
+.speed button[aria-pressed="true"] {
+  color: var(--bg);
+  background: var(--text);
+}
+
+/* ---------------------------------------------------------------- tape */
+
+.tape {
+  overflow: hidden;
+  padding: 4px 0;
+}
+
+.tape-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  padding: 2px 12px;
+  font-size: 12px;
+}
+
+.tape-row .qty,
+.tape-row .time {
+  color: var(--text-muted);
+  text-align: right;
+}
+
+.tape-row.buy .px {
+  color: var(--bid);
+}
+
+.tape-row.sell .px {
+  color: var(--ask);
+}
+
+.tape-row:first-child {
+  background: linear-gradient(90deg, transparent, rgba(221, 227, 236, 0.04), transparent);
+}
+
+/* ---------------------------------------------------------------- ticket */
+
+.ticket {
+  border-top: 1px solid var(--panel-edge);
+  padding: 10px 12px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+
+.ticket .field {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.ticket label {
+  font-size: 10px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+.ticket input,
+.ticket select {
+  border: 1px solid var(--panel-edge);
+  background: var(--panel);
+  padding: 5px 8px;
+  font-size: 12px;
+  width: 100%;
+}
+
+.ticket select option {
+  background: var(--panel);
+}
+
+.side-toggle {
+  display: flex;
+  border: 1px solid var(--panel-edge);
+}
+
+.side-toggle button {
+  flex: 1;
+  padding: 5px 0;
+  font-size: 12px;
+  color: var(--text-muted);
+}
+
+.side-toggle button.bid[aria-pressed="true"] {
+  background: var(--bid-dim);
+  color: var(--bid);
+}
+
+.side-toggle button.ask[aria-pressed="true"] {
+  background: var(--ask-dim);
+  color: var(--ask);
+}
+
+.ticket .submit {
+  grid-column: 1 / -1;
+  padding: 7px 0;
+  border: 1px solid var(--panel-edge);
+  font-size: 12px;
+  letter-spacing: 0.06em;
+}
+
+.ticket .submit.bid {
+  border-color: var(--bid);
+  color: var(--bid);
+}
+
+.ticket .submit.bid:hover {
+  background: var(--bid-dim);
+}
+
+.ticket .submit.ask {
+  border-color: var(--ask);
+  color: var(--ask);
+}
+
+.ticket .submit.ask:hover {
+  background: var(--ask-dim);
+}
+
+/* ---------------------------------------------------------------- status */
+
+.statusbar {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  padding: 0 14px;
+  border-top: 1px solid var(--panel-edge);
+  background: var(--panel);
+  font-size: 11px;
+  color: var(--text-muted);
+}
+
+.statusbar b {
+  color: var(--text);
+  font-weight: 500;
+}
+
+.statusbar .engine {
+  margin-left: auto;
+}
+
+.statusbar .dot {
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--bid);
+  margin-right: 6px;
+}

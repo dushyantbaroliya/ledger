@@ -1,0 +1,14 @@
+[workspace]
+resolver = "2"
+members = ["crates/lob-core", "crates/lob-wasm"]
+
+[workspace.package]
+version = "0.1.0"
+edition = "2021"
+license = "MIT"
+repository = "https://github.com/dushyantbaroliya/ledger"
+
+[profile.release]
+opt-level = 3
+lto = "fat"
+codegen-units = 1
