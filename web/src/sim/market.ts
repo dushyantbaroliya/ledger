@@ -1,7 +1,7 @@
 /**
  * Synthetic order-flow generator.
  *
- * Not a price model — a *flow* model. Agents post limit orders around a
+ * Not a price model, a *flow* model. Agents post limit orders around a
  * slowly wandering fair value, occasionally cross the spread with market
  * orders, and cancel stale quotes. Price emerges from the book, exactly as
  * it does on a real venue; nothing here sets the price directly.

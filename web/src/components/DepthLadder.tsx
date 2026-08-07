@@ -43,7 +43,7 @@ export function DepthLadder({ sim }: { sim: Simulation }) {
     const ba = sim.bestAsk;
     ctx.fillStyle = COLORS.muted;
     ctx.textAlign = "center";
-    const spreadLabel = bb !== null && ba !== null ? `spread ${fmtPrice(ba - bb)}` : "—";
+    const spreadLabel = bb !== null && ba !== null ? `spread ${fmtPrice(ba - bb)}` : "-";
     ctx.fillText(spreadLabel, w / 2, mid);
     ctx.strokeStyle = COLORS.grid;
     ctx.beginPath();

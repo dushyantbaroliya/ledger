@@ -245,7 +245,7 @@ fn identical_command_streams_produce_identical_event_streams() {
         let mut book = OrderBook::new();
         let mut all = Vec::new();
         for i in 0..200u64 {
-            // A fixed, branchy little scenario — no randomness needed to
+            // A fixed, branchy little scenario, no randomness needed to
             // prove replay: any divergence at all would fail equality.
             let side = if i % 3 == 0 { Side::Bid } else { Side::Ask };
             let price = 10_000 + ((i * 7) % 40) as i64 - 20;

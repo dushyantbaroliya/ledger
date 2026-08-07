@@ -6,7 +6,7 @@
 //!
 //! # Data structure
 //!
-//! Each side is a `BTreeMap<Price, VecDeque<RestingOrder>>` — a sorted map of
+//! Each side is a `BTreeMap<Price, VecDeque<RestingOrder>>`, a sorted map of
 //! price levels, each holding a FIFO queue. An id → (side, price) index gives
 //! cancels O(log n) access without scanning. A flat sorted-vec book would be
 //! faster for small books, but the BTreeMap keeps inserts/removals O(log n)

@@ -6,7 +6,7 @@ type OrderKind = "limit" | "market";
 
 /**
  * Manual order entry. Orders submitted here go through the same Rust
- * matching path as the simulated flow — the user is just one more
+ * matching path as the simulated flow, the user is just one more
  * participant in the market.
  */
 export function OrderTicket({ sim }: { sim: Simulation }) {
@@ -85,7 +85,7 @@ export function OrderTicket({ sim }: { sim: Simulation }) {
         <input
           id="ot-price"
           inputMode="decimal"
-          placeholder={kind === "market" ? "—" : "100.00"}
+          placeholder={kind === "market" ? "-" : "100.00"}
           value={kind === "market" ? "" : price}
           onChange={(e) => setPrice(e.target.value)}
           disabled={kind === "market"}

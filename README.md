@@ -1,7 +1,7 @@
 # Ledger
 
 A deterministic limit-order-book matching engine in Rust, running live in the
-browser via WebAssembly — with a synthetic market trading against you.
+browser via WebAssembly, with a synthetic market trading against you.
 
 **Live demo:** [dushyantbaroliya.github.io/ledger](https://dushyantbaroliya.github.io/ledger/)
 
@@ -11,7 +11,7 @@ Ledger is a market microstructure lab. The core is an exchange-style matching
 engine implementing strict **price-time priority**: better prices trade first,
 ties break by arrival order, and trades always print at the resting order's
 price. On top of it, a seeded flow simulator posts, crosses, and cancels orders
-the way impatient and patient market participants do — price *emerges from the
+the way impatient and patient market participants do. Price *emerges from the
 book*; nothing in the simulation sets it directly.
 
 You can trade against the flow yourself: the order ticket goes through exactly
@@ -22,7 +22,7 @@ the same matching path as the simulated agents.
 These are the rules the engine is built around, in priority order:
 
 1. **Integer arithmetic only.** Prices are ticks (`i64`), quantities are lots
-   (`u64`). Floats never enter the matching path — floating-point prices are
+   (`u64`). Floats never enter the matching path; floating-point prices are
    how backtests silently diverge across platforms.
 2. **Deterministic replay.** The same command sequence produces a
    byte-identical event stream on every platform, including wasm32. This is
@@ -37,7 +37,7 @@ These are the rules the engine is built around, in priority order:
 
 ```
 crates/
-  lob-core/    matching engine — no deps, no I/O, no unsafe
+  lob-core/    matching engine: no deps, no I/O, no unsafe
   lob-wasm/    wasm-bindgen bridge (serde events + flat Float64Array depth)
 web/           Vite + React + TS terminal UI, Canvas rendering
 ```
@@ -47,7 +47,7 @@ web/           Vite + React + TS terminal UI, Canvas rendering
   beat it on small books; that swap is a benchmark-driven decision for later,
   not a guess made now.
 - **Order types:** limit and market; `GTC`, `IOC`, `FOK` (FOK is checked
-  against reachable liquidity before any fill — all-or-nothing means the book
+  against reachable liquidity before any fill: all-or-nothing means the book
   is untouched on reject).
 - **The WASM boundary:** events cross as plain JS objects (order-arrival rate,
   ergonomics win); depth snapshots cross as flat `Float64Array`s (60 fps
@@ -73,7 +73,7 @@ cd web && npm install && npm run dev
 
 - The market is **synthetic**: seeded stochastic flow, not historical data.
   Replay of real tick data (LOBSTER/IEX format) is the next milestone.
-- No strategy/backtest layer yet — the engine emits everything a backtester
+- No strategy/backtest layer yet. The engine emits everything a backtester
   needs (deterministic events), but the PnL accounting on top doesn't exist
   yet.
 - Single instrument, single-threaded by design. Concurrency belongs to a

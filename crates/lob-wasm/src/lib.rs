@@ -1,10 +1,10 @@
 //! Browser bridge for the `lob-core` matching engine.
 //!
 //! Two serialization strategies, chosen by call frequency:
-//! - **Events** (per submitted order) cross as plain JS objects via serde —
+//! - **Events** (per submitted order) cross as plain JS objects via serde,
 //!   ergonomic for the tape and stores, and cheap at order-arrival rate.
 //! - **Depth snapshots** (per animation frame) cross as flat `Float64Array`s
-//!   — `[price, qty, orderCount] × levels` — so the 60 fps render path never
+//!   (`[price, qty, orderCount] × levels`), so the 60 fps render path never
 //!   allocates JS objects or parses JSON.
 //!
 //! `lob-core` stays dependency-free; this crate mirrors its event types into

@@ -12,7 +12,7 @@ const COLORS = {
 
 /**
  * Mid-price line with trade prints. Buys (bid takers) print emerald above
- * the tape's noise, sells print amber — the same encoding as the ladder, so
+ * the tape's noise, sells print amber, the same encoding as the ladder, so
  * the two panes read as one instrument.
  */
 export function PriceChart({ sim }: { sim: Simulation }) {

@@ -1,6 +1,6 @@
 /**
  * Deterministic PRNG (mulberry32). The whole simulation is seeded so a run
- * is reproducible: same seed, same order flow, same book — the browser-side
+ * is reproducible: same seed, same order flow, same book, the browser-side
  * counterpart of the engine's replay determinism.
  */
 export class Rng {

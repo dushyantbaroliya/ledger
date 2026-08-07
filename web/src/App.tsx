@@ -77,19 +77,19 @@ export default function App() {
     <div className="app">
       <header className="topbar">
         <span className="wordmark">LEDGER</span>
-        <span className="instrument">LDGR — synthetic · tick 0.01</span>
+        <span className="instrument">LDGR · synthetic · tick 0.01</span>
         <div className="bbo">
           <span>
             <span className="label">BID</span>
-            <span className="bid-px">{bid !== null ? fmtPrice(bid) : "—"}</span>
+            <span className="bid-px">{bid !== null ? fmtPrice(bid) : "-"}</span>
           </span>
           <span>
             <span className="label">ASK</span>
-            <span className="ask-px">{ask !== null ? fmtPrice(ask) : "—"}</span>
+            <span className="ask-px">{ask !== null ? fmtPrice(ask) : "-"}</span>
           </span>
           <span>
             <span className="label">SPR</span>
-            {bid !== null && ask !== null ? fmtPrice(ask - bid) : "—"}
+            {bid !== null && ask !== null ? fmtPrice(ask - bid) : "-"}
           </span>
         </div>
         <div className="controls">

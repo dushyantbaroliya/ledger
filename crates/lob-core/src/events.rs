@@ -52,7 +52,7 @@ pub enum Event {
         seq: Seq,
         maker_id: OrderId,
         taker_id: OrderId,
-        /// Side of the *taker* — the aggressor. A `Bid` taker means the trade
+        /// Side of the *taker*, the aggressor. A `Bid` taker means the trade
         /// printed at the ask (a lift); an `Ask` taker hit the bid.
         taker_side: Side,
         price: Price,
